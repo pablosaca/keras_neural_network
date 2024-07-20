@@ -17,7 +17,7 @@ class Constants(Enum):
 
     TEST_SIZE = 0.15
     RANDOM_SEED = 123
-    EPOCA = 50
+    EPOCA = 15
     LOTE = 16
     MUESTRA_VALIDACION = 0.1
     VERBOSE = 1
