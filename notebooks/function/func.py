@@ -14,7 +14,7 @@ def load_house_images(df: pd.DataFrame, inputPath: str):
     ----------
     df: pd.DataFrame
         Tabla con los datos
-    inputPath : str
+    inputPath: str
         Directorio donde se encuentran las imagenes
 
     Returns
@@ -40,7 +40,7 @@ def load_house_images(df: pd.DataFrame, inputPath: str):
             # update the list of input images
             image = cv2.imread(housePath)
             image = cv2.resize(image, (64, 64))
-            image = image[:,:,[2,1,0]]
+            image = image[:, :, [2, 1, 0]]
             inputImages.append(image)
             
         # tile the four input images in the output image such the first
@@ -58,11 +58,13 @@ def load_house_images(df: pd.DataFrame, inputPath: str):
     return np.array(images)
 
 
-def load_images(df: pd.DataFrame,
-                inputPath: str,
-                alto_ancho: list,
-                canal: int,
-                tipo_foto=str):
+def load_images(
+        df: pd.DataFrame,
+        inputPath: str,
+        alto_ancho: list,
+        canal: int,
+        tipo_foto=str
+):
     """
     Cargar las imágenes de los inmuebles desde un archivo.
     
@@ -70,8 +72,15 @@ def load_images(df: pd.DataFrame,
     ----------
     df: pd.DataFrame
         Tabla con los datos
-    inputPath : str
+    inputPath: str
         Directorio donde se encuentran las imagenes
+    alto_ancho: list
+        Altura y ancho de la imagen
+    canal: int
+        El canal sería 3 porque las imágenes estána a color
+    tipo_foto: str
+        Nombre que hace referencia a las cuatro fotos (baño, habitación, cocina y frontal)
+
 
     Returns
     -------
@@ -105,7 +114,7 @@ def load_images(df: pd.DataFrame,
             # update the list of input images
             image = cv2.imread(housePath)
             image = cv2.resize(image, (alto, ancho))
-            image = image[:,:,[2,1,0]]
+            image = image[:, :, [2, 1, 0]]
             inputImages.append(image)
   
         images.append(inputImages)
@@ -130,7 +139,7 @@ def predict_inverse_transform(y_pred: np.ndarray, mix_max_norm: MinMaxScaler):
     y_pred : np.ndarray
         Predicciones del modelo (escala real)
     """    
-    y_pred_inv = mix_max_norm.inverse_transform(y_pred) # desnormalización (sobre norma de datos de entrenamiento)
+    y_pred_inv = mix_max_norm.inverse_transform(y_pred)  # desnormalización (sobre norma de datos de entrenamiento)
     y_pred = np.exp(y_pred_inv)
     del y_pred_inv
     return y_pred
